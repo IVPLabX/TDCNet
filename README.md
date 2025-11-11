@@ -20,40 +20,85 @@ Visual comparison of results from SOTA methods and TDCNet on the IRSTD-UAV and I
 
 ## Environment
 
-[PyTorch >= 1.7](https://pytorch.org/)  
-[BasicSR >= 1.3.4.9](https://github.com/XPixelGroup/BasicSR)
+- [Python](https://www.python.org/)
+- [PyTorch](https://pytorch.org/)
+- [tqdm](https://github.com/tqdm/tqdm)
+- [pycocotools](https://github.com/cocodataset/cocoapi)
+- [OpenCV (cv2)](https://opencv.org/)
+- [NumPy](https://numpy.org/)
 
-## Installation
+## Data
+1. Download the datasets.
+   - [IRSTD-UAV](https://drive.google.com/file/d/17kgt2i09njcvjbtX3ivn884Lw6Ov2xb1/view)
+   - [IRDST](https://xzbai.buaa.edu.cn/datasets.html)
 
-```
-pip install -r requirements.txt
-python setup.py develop
-```
+2. Perform background alignment before training or testing.  
+   You can use the [GIM](https://github.com/xuelunshen/gim) method for background alignment.
 
-## How To Test
-
-· Refer to ./options/test for the configuration file of the model to be tested, and prepare the testing data and pretrained model.  
-· The pretrained models are available in ./experiments/pretrained_models/  
-· Then run the follwing codes (taking net_g_SCINet_x4.pth as an example):  
-
-```shell
-python basicsr/test.py -opt options/test/benchmark_SCINet_x4.yml
-```
-
-The testing results will be saved in the ./results folder.
+3. Organize the dataset structure as follows:
+   IRSTD-UAV/
+  ├── images/
+  │ ├── 1/
+  │ │ ├── 00000000.png
+  │ │ ├── 00000001.png
+  │ │ └── ...
+  │ ├── 2/
+  │ │ ├── 00000000.png
+  │ │ ├── 00000001.png
+  │ │ └── ...
+  │ └── ...
+  ├── labels/
+  │ ├── 1/
+  │ │ ├── 00000000.png
+  │ │ ├── 00000001.png
+  │ │ └── ...
+  │ ├── 2/
+  │ │ ├── 00000000.png
+  │ │ ├── 00000001.png
+  │ │ └── ...
+  │ └── ...
+  ├── matches/
+  │ ├── 1/
+  │ │ ├── 00000000/
+  │ │ │ ├── match_1.png
+  │ │ │ ├── match_2.png
+  │ │ │ └── ...
+  │ │ ├── 00000001/
+  │ │ │ ├── match_1.png
+  │ │ │ ├── match_2.png
+  │ │ │ └── ...
+  │ │ └── ...
+  │ └── ...
+  ├── train.txt
+  ├── val.txt
+  ├── train_coco.json
+  └── val_coco.json
 
 ## How To Train
 
-· Refer to ./options/train for the configuration file of the model to train.  
-· Preparation of training data can refer to this page. All datasets can be downloaded at the official website.  
-· Note that the default training dataset is based on lmdb, refer to [docs in BasicSR](https://github.com/XPixelGroup/BasicSR/blob/master/docs/DatasetPreparation.md) to learn how to generate the training datasets.  
-· The training command is like  
+1. **Prepare the environment and dataset**
+   - Configure environment variables:
+     ```python
+     os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+     ```
+   - Set dataset paths in the script:
+     ```python
+     DATA_PATH = "/Dataset/IRSTD-UAV/"
+     train_annotation_path = "/Dataset/IRSTD-UAV/train.txt"
+     val_annotation_path = "/Dataset/IRSTD-UAV/val.txt"
+     ```
 
-```shell
-CUDA_VISIBLE_DEVICES=0 python basicsr/train.py -opt options/train/train_SCINet_x4.yml
-CUDA_VISIBLE_DEVICES=0,1,2,3 python -m torch.distributed.launch --nproc_per_node=4 --master_port=4321 basicsr/train.py -opt options/train/train_SCINet-S_x4.yml --launcher pytorch
+2. **Training command**
+   ```bash
+   python train.py
+
+
+## How To Test
+```bash
+python test.py
 ```
 
+The testing results will be saved in the ./results folder.
 
 ## Citation
 If you find our work useful for your research, please consider citing our paper:
@@ -117,7 +162,7 @@ If you have any question, please contact: houzhangfang@xidian.edu.cn,
 Copyright &copy; Xidian University.
 
 ## Acknowledgments
-Some of the SR code is based on [BasicSR](https://github.com/XPixelGroup/BasicSR/). Thanks for their excellent work!
+Some of the code is based on [STMENet](https://github.com/UESTC-nnLab/STME). Thanks for their excellent work!
 
 ## License
 MIT License. This code is only freely available for non-commercial research use.
