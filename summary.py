@@ -47,7 +47,7 @@ if __name__ == "__main__":
     pure_inf_time = 0
     fps = 0
     val_annotation_path = "/data1/gsk/Dataset/IRSTD-UAV/val.txt"
-    val_dataset = seqDataset(val_annotation_path, input_shape[0], 5, 'val') # seqDataset(val_annotation_path, input_shape[0], 5, 'val')
+    val_dataset = seqDataset(val_annotation_path, input_shape[0], num_frame, 'val')
     gen_val     = DataLoader(val_dataset, shuffle = False, batch_size = 1, num_workers = 10, pin_memory=True,
                                     drop_last=True, collate_fn=dataset_collate)
     m = nn.DataParallel(m).cuda()
