@@ -102,7 +102,7 @@ python test.py
 The testing results will be saved in the ./results folder.
 
 ## Citation
-If you find our work useful for your research, please consider citing our paper:
+If you find our work and our dataset IRSTD-UAV useful for your research, please consider citing our paper:
 ```
 @inproceedings{2026AAAI_TDCNet,
   title     = {Spatio-Temporal Context Learning with Temporal Difference Convolution for Moving Infrared Small Target Detection},
