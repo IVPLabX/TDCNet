@@ -40,7 +40,7 @@ Visual comparison of results from SOTA methods and TDCNet on the IRSTD-UAV and I
 - [OpenCV (cv2)](https://opencv.org/)
 - [NumPy](https://numpy.org/)
 
-## Dataset Download Link
+## IRSTD-UAV Dataset 
 
 1. Our custom-built dataset (IRSTD-UAV) can be downloaded via the following link:
 
