@@ -174,7 +174,7 @@ year        =  {2023},
 ```
 
 ## Contact
-If you have any question, please contact: houzhangfang@xidian.edu.cn,
+If you have any question, please contact: shukaiguo@stu.xidian.edu.cn and houzhangfang@xidian.edu.cn.
 
 Copyright &copy; Xidian University.
 
